@@ -77,6 +77,12 @@ plt.title("Bankrupt?")
 plt.xlabel("Bankrupt")
 plt.ylabel("Number of companies")
 
+###################################################
+
+import pandas_profiling as pdp
+
+df_profiling = pdp.ProfileReport(df, title="Pandas Profiling Report for Bankruptcy dataset", minimal = True, explorative = True)
+df_profiling.to_file(output_file="Bankruptcy.html")
 
 ###################################################
 
