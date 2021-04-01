@@ -46,8 +46,10 @@ display(df.describe())
 
 # Cheking for unique values
 
-display(df[' Liability-Assets Flag'].nunique())
-display(df[' Net Income Flag'].nunique())
+display(df[' Liability-Assets Flag'].nunique()) #it has 2 values
+df[[' Liability-Assets Flag']].value_counts() # but the values are unbalanced
+
+display(df[' Net Income Flag'].nunique()) # the whole column has only 1 value
 
 # Dropping these 2 columnds
 
