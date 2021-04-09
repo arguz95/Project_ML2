@@ -59,6 +59,10 @@ import requests
 import pandas as pd
 import seaborn as sns
 
+import mlflow
+from hyperopt import fmin, tpe, hp, Trials, STATUS_OK
+from IPython.display import Image
+
 # To plot pretty figures
 # %matplotlib inline
 import matplotlib as mpl
