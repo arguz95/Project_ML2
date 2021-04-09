@@ -104,15 +104,15 @@ df.info()
 # Some more information about the dataset
 
 
-#display(df.shape)
-#display(df.isnull().sum())
-#display(df.describe())
+display(df.shape)
+display(df.isnull().sum())
+display(df.describe())
 
 # +
 # Cheking for unique values
 
-#display(df['Liability-Assets Flag'].nunique())
-#display(df['Net Income Flag'].nunique())
+display(df['Liability-Assets Flag'].nunique())
+display(df['Net Income Flag'].nunique())
 
 # +
 # Dropping these 2 columnds
@@ -162,8 +162,8 @@ y = df['Bankrupt?']
 
 X.head()
 
-#display(X.shape)
-#display(y.shape)
+display(X.shape)
+display(y.shape)
 
 # ## Preparing Data for ML models
 # *Splitting the data*
@@ -213,8 +213,8 @@ X.columns = x_col
 display(X.head())
 '''
 
-#display(X_train.shape)
-#display(y_train.shape)
+display(X_train.shape)
+display(y_train.shape)
 
 count = 0
 for i in y_train:
@@ -366,7 +366,7 @@ for i in values.index:
 # -
 
 ctr = len(values)
-#print("Number of observations dropped = {}".format(ctr))
+print("Number of observations dropped = {}".format(ctr))
 
 # +
 # Modelling with balanced target 
@@ -402,8 +402,8 @@ over_sample=SMOTE()
 X_train_prepared, y_train=over_sample.fit_resample(X_train_prepared,y_train)
 # -
 
-#display(X_train_prepared.shape)
-#display(y_train.shape)
+display(X_train_prepared.shape)
+display(y_train.shape)
 
 plt.figure(figsize=(5,5))
 splot = sns.countplot(data = y_train, x = 'Bankrupt?', palette = 'Blues')
