@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Jules/Documents/GitHub/Project_ML2/mlruns/0/b1e0537b91114ec5b08a5e658b196eb0/artifacts
+end_time: 1617938449999
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: b1e0537b91114ec5b08a5e658b196eb0
+run_uuid: b1e0537b91114ec5b08a5e658b196eb0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1617938446757
+status: 3
+tags: []
+user_id: Jules
