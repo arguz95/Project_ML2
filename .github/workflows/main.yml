@@ -22,7 +22,10 @@ jobs:
       - name: 'Train my model'
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+          FILES: ./Unit_Test/
+          
         run: |
           # Your ML workflow goes here
           pip install -r requirements.txt
-          python ./Unit_Test/.py
+          for f in $FILES:
+            python f.py
