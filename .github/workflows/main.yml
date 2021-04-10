@@ -22,7 +22,6 @@ jobs:
       - name: 'Train my model'
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          FILES: ./Unit_Test/
           
         run: |
           # Your ML workflow goes here
