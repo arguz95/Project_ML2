@@ -564,6 +564,7 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.preprocessing import StandardScaler, normalize
 from sklearn.metrics import silhouette_score
 import scipy.cluster.hierarchy as shc
+from sklearn.manifold import TSNE
 
 # +
 # Scaling the data so that all the features become comparable
