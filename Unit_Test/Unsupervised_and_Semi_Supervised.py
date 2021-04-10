@@ -503,7 +503,7 @@ labels = model.labels_
 from sklearn.metrics import silhouette_samples
 silhouette = silhouette_samples(X_std11,labels)
 silhouette_avg = silhouette_score(X_std11,labels)
-print("The average silhouette_score is :", silhouette_avg)
+#print("The average silhouette_score is :", silhouette_avg)
 
 import pandas
 df4 = pandas.DataFrame({'label':labels,'silhouette':silhouette})
