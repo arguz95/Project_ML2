@@ -59,10 +59,6 @@ import requests
 import pandas as pd
 import seaborn as sns
 
-import mlflow
-from hyperopt import fmin, tpe, hp, Trials, STATUS_OK
-from IPython.display import Image
-
 # To plot pretty figures
 # %matplotlib inline
 import matplotlib as mpl
@@ -104,15 +100,15 @@ df.info()
 # Some more information about the dataset
 
 
-#display(df.shape)
-#display(df.isnull().sum())
-#display(df.describe())
+display(df.shape)
+display(df.isnull().sum())
+display(df.describe())
 
 # +
 # Cheking for unique values
 
-#display(df['Liability-Assets Flag'].nunique())
-#display(df['Net Income Flag'].nunique())
+display(df['Liability-Assets Flag'].nunique())
+display(df['Net Income Flag'].nunique())
 
 # +
 # Dropping these 2 columnds
@@ -162,10 +158,46 @@ y = df['Bankrupt?']
 
 X.head()
 
-# +
-#display(X.shape)
-#display(y.shape)
-# -
+display(X.shape)
+display(y.shape)
+
+# !pip install category_encoders
+
+import category_encoders as ce
+
+#Creating Synthetic Categorical feature
+x =[]
+for i in X['Retained Earnings to Total Assets']:
+    if i < 0.931097:
+        x.append('low')
+    elif i >= 0.931097 and i < 0.937672:
+        x.append('low-medium')
+    elif i >= 0.937672 and i < 0.944811:
+        x.append('high-medium')
+    else:
+        x.append('high')
+X['Retained Earnings to Total Assets bin']=x
+
+#Creating Synthetic Categorical feature
+x =[]
+for i in X['Per Share Net profit before tax']:
+    if i < 0.17037:
+        x.append('low')
+    elif i >= 0.170370 and i < 0.179709:
+        x.append('low-medium')
+    elif i >= 0.179709 and i < 0.193493:
+        x.append('high-medium')
+    else:
+        x.append('high')
+X['Per Share Net profit before tax bin']=x
+
+X.head()
+
+#Create an object for Base N Encoding
+encoder= ce.BaseNEncoder(cols=['Per Share Net profit before tax bin','Retained Earnings to Total Assets bin'],return_df=True,base=3)
+#Fit and Transform Data
+X=encoder.fit_transform(X)
+X.head()
 
 # ## Preparing Data for ML models
 # *Splitting the data*
@@ -215,10 +247,8 @@ X.columns = x_col
 display(X.head())
 '''
 
-# +
-#display(X_train.shape)
-#display(y_train.shape)
-# -
+display(X_train.shape)
+display(y_train.shape)
 
 count = 0
 for i in y_train:
@@ -370,7 +400,7 @@ for i in values.index:
 # -
 
 ctr = len(values)
-#print("Number of observations dropped = {}".format(ctr))
+print("Number of observations dropped = {}".format(ctr))
 
 # +
 # Modelling with balanced target 
@@ -404,11 +434,10 @@ pipeline = Pipeline(steps = steps)
 #X_train_prepared, y_train = pipeline.fit_resample(X_train_prepared, y_train)
 over_sample=SMOTE()
 X_train_prepared, y_train=over_sample.fit_resample(X_train_prepared,y_train)
-
-# +
-#display(X_train_prepared.shape)
-#display(y_train.shape)
 # -
+
+display(X_train_prepared.shape)
+display(y_train.shape)
 
 plt.figure(figsize=(5,5))
 splot = sns.countplot(data = y_train, x = 'Bankrupt?', palette = 'Blues')
@@ -419,6 +448,8 @@ plt.xlabel("Bankrupt")
 plt.ylabel("Number of companies")
 
 # ### Dropping highly correlated columns (greater than 0.85)
+
+# !pip install rfpimp
 
 import rfpimp
 from rfpimp import plot_corr_heatmap
@@ -522,6 +553,8 @@ plt.show()
 # -
 
 # ### Recursive Feature Elimination
+
+# !pip install yellowbrick
 
 # +
 from sklearn.feature_selection import RFE
@@ -718,6 +751,8 @@ fig.show()
 
 # ### PHATE
 
+# !pip install phate
+
 import phate
 p = phate.PHATE(random_state=42)
 X_phate = p.fit_transform(X_train_prepared)
@@ -754,6 +789,10 @@ fig.show()
 
 # ## MLflow
 
+# !pip install mlflow
+
+# !pip install hyperopt
+
 import mlflow
 import mlflow.pyfunc
 import mlflow.sklearn
@@ -765,7 +804,7 @@ import numpy as np
 import lightgbm as lgb
 from lightgbm import LGBMModel,LGBMClassifier
 
-search_space = {"max_depth":scope.int(hp.quniform("max_depth",2,100,5)),
+hyperparameters = {"max_depth":scope.int(hp.quniform("max_depth",2,100,5)),
                 "n_estimators":scope.int(hp.quniform("n_estimators",2,100,1)),
                 "num_leaves": scope.int(hp.quniform("num_leaves",2,50,1)),
                 "reg_alpha": hp.loguniform('reg_li',-5,5),
@@ -773,8 +812,7 @@ search_space = {"max_depth":scope.int(hp.quniform("max_depth",2,100,5)),
                 "learning_rate": hp.loguniform("learning_rate", np.log(0.01), np.log(0.5)),
                 "min_child_weight": hp.uniform('min_child_weight', 0.5, 10),
                 "boosting": hp.choice("boosting",["gbdt","dart","goss"]),
-                "objective":"binary"
-}
+                "objective":"binary"}
 
 
 # +
@@ -787,26 +825,76 @@ def train_model(parameters):
         
         mlflow.log_params(parameters)
         
-        score = cross_val_score(booster, X_train_prepared, y_train, cv=5, 
-                               scoring = "f1_macro",n_jobs=-1)
+        score = cross_val_score(booster, X_train_prepared, y_train, cv=5, scoring = "f1_macro",n_jobs=-1)
         mean_score = np.mean(score)
         
         mlflow.log_metric('f1_macro', mean_score)
         
         return{'status':STATUS_OK,
-               "loss":-1*mean_score,
+               "loss":mean_score,
                'booster':booster.get_params}
     
 with mlflow.start_run(run_name='lightgbm_bankruptcy'):
     best_params = fmin(
         fn=train_model,
-        space=search_space,
+        space=hyperparameters,
         algo=tpe.suggest,
         max_evals = 50,
         trials = Trials(),
-        rstate=np.random.RandomState(1)
-    )
-
+        rstate=np.random.RandomState(1))
 # -
 
+# ## Real Model
 
+import mlflow
+df = mlflow.search_runs(filter_string="metric.f1_macro > 0.8")
+
+df
+
+df.sort_values(by='metrics.f1_macro').iloc[0]
+
+params = df.sort_values(by='metrics.f1_macro').iloc[0,7:16].to_dict()
+params
+
+params["params.objective"]
+
+X_test_prepared = X_test_final[chosen_features['predictor']]
+X_test_prepared = X_test_prepared[chosen_features['predictor']]
+X_test_final_prepared = X_test_final_prepared[chosen_features['predictor']]
+
+import lightgbm
+
+train_data = lightgbm.Dataset(X_train_prepared, label=y_train)
+valid_data = lightgbm.Dataset(X_test_prepared, label=y_test)
+test_data = lightgbm.Dataset(X_test_final_prepared, label=y_test_final)
+
+X_train_prepared.shape
+
+parameters = {
+    'objective': params["params.objective"],
+    'boosting': params["params.boosting"],
+    'num_leaves': int(params["params.num_leaves"]),
+    'learning_rate': float(params["params.learning_rate"]),
+    'n_estimators': int(params["params.n_estimators"]),
+    'min_child_weight': float(params["params.min_child_weight"]),
+    'random_state': 1,
+    'reg_alpha':float(params["params.reg_alpha"]),
+    'max_depth': int(params["params.max_depth"])
+}
+
+model = lightgbm.train(parameters,
+                       train_data,
+                       valid_sets=valid_data)
+
+y_pred = model.predict(X_test_final_prepared)
+y_pred=y_pred.round(0)
+y_pred=y_pred.astype(int)
+
+from sklearn.metrics import f1_score
+f1_score(y_test_final, y_pred, average='weighted')
+
+# +
+# 'weighted':
+# Calculate metrics for each label, and find their average weighted by support 
+#(the number of true instances for each label). This alters ‘macro’ to account 
+#for label imbalance; it can result in an F-score that is not between precision and recall.
