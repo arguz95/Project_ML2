@@ -92,7 +92,7 @@ bankruptcy = df.copy() # we can use this as raw data afterwards
 
 df.head()
 
-df.info()
+#df.info()
 
 # *No missing values and no categorical variables in the dataset*
 
