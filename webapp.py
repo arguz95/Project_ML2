@@ -103,7 +103,7 @@ def predict_note_authentication():
     val_prep = pd.DataFrame(val_new,columns=num_attribs)
     
     
-    prediction=classifier.predict([[var1,var2,var3,var4,var5]])
+    prediction=classifier.predict(val_prep)
     if prediction>0.5:
       return "The company is going to be bankrupt!!"
     return "The company is safe. :)"
