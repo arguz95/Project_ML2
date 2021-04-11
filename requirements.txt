@@ -19,7 +19,7 @@ imbalanced-learn==0.8.0
 imblearn==0.0
 importlib-metadata==3.10.0
 ipykernel==5.5.3
-ipython==7.22.0
+ipython
 ipython-genutils==0.2.0
 ipywidgets==7.6.3
 jedi==0.18.0
