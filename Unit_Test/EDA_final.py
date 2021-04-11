@@ -64,11 +64,15 @@ pd.set_option('display.max_columns', None)
 # Sets seed for the entire notebook
 
 np.random.seed(42)
-# -
 
+# +
 # Import data
-df = pd.read_csv("bankruptcy.csv")
+
+url = "https://raw.githubusercontent.com/arguz95/Project_ML2/master/Data/bankrupcy.csv"
+download = requests.get(url).content
+df = pd.read_csv(io.StringIO(download.decode('utf-8')))
 bankruptcy = df.copy() # we can use this as raw data afterwards
+# -
 
 df = df.drop([' Net Income Flag'], axis=1)
 
