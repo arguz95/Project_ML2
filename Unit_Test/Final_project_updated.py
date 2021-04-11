@@ -100,15 +100,15 @@ df.info()
 # Some more information about the dataset
 
 
-display(df.shape)
-display(df.isnull().sum())
-display(df.describe())
+#display(df.shape)
+#display(df.isnull().sum())
+#display(df.describe())
 
 # +
 # Cheking for unique values
 
-display(df['Liability-Assets Flag'].nunique())
-display(df['Net Income Flag'].nunique())
+#display(df['Liability-Assets Flag'].nunique())
+#display(df['Net Income Flag'].nunique())
 
 # +
 # Dropping these 2 columnds
@@ -158,10 +158,10 @@ y = df['Bankrupt?']
 
 X.head()
 
-display(X.shape)
-display(y.shape)
-
-# !pip install category_encoders
+# +
+#display(X.shape)
+#display(y.shape)
+# -
 
 import category_encoders as ce
 
@@ -247,14 +247,16 @@ X.columns = x_col
 display(X.head())
 '''
 
-display(X_train.shape)
-display(y_train.shape)
+# +
+#display(X_train.shape)
+#display(y_train.shape)
+# -
 
 count = 0
 for i in y_train:
     if i == 1:
         count +=1
-print("There are",count,"cases of bankruptcy and",len(y_train)-count,"of non-bankruptcy")
+#print("There are",count,"cases of bankruptcy and",len(y_train)-count,"of non-bankruptcy")
 
 y_train = pd.DataFrame(y_train)
 y_test = pd.DataFrame(y_test)
@@ -400,7 +402,7 @@ for i in values.index:
 # -
 
 ctr = len(values)
-print("Number of observations dropped = {}".format(ctr))
+#print("Number of observations dropped = {}".format(ctr))
 
 # +
 # Modelling with balanced target 
@@ -415,9 +417,6 @@ sel = SelectFromModel(model)
 sel.fit(X_test_prepared, y_test)
 
 selected_feat= X_train.columns[(sel.get_support())]
-# -
-
-# !pip install imblearn
 
 # +
 # Dealing with imbalanced data
@@ -434,10 +433,11 @@ pipeline = Pipeline(steps = steps)
 #X_train_prepared, y_train = pipeline.fit_resample(X_train_prepared, y_train)
 over_sample=SMOTE()
 X_train_prepared, y_train=over_sample.fit_resample(X_train_prepared,y_train)
-# -
 
-display(X_train_prepared.shape)
-display(y_train.shape)
+# +
+#display(X_train_prepared.shape)
+#display(y_train.shape)
+# -
 
 plt.figure(figsize=(5,5))
 splot = sns.countplot(data = y_train, x = 'Bankrupt?', palette = 'Blues')
@@ -448,8 +448,6 @@ plt.xlabel("Bankrupt")
 plt.ylabel("Number of companies")
 
 # ### Dropping highly correlated columns (greater than 0.85)
-
-# !pip install rfpimp
 
 import rfpimp
 from rfpimp import plot_corr_heatmap
@@ -553,8 +551,6 @@ plt.show()
 # -
 
 # ### Recursive Feature Elimination
-
-# !pip install yellowbrick
 
 # +
 from sklearn.feature_selection import RFE
@@ -788,10 +784,6 @@ fig.show()
 # -
 
 # ## MLflow
-
-# !pip install mlflow
-
-# !pip install hyperopt
 
 import mlflow
 import mlflow.pyfunc
