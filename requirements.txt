@@ -67,7 +67,7 @@ requests==2.25.1
 retrying==1.3.3
 s-gd2==1.8
 scikit-learn==0.24.1
-scipy=
+scipy
 scprep==1.1.0
 seaborn==0.11.1
 Send2Trash==1.5.0
