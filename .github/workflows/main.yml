@@ -26,4 +26,4 @@ jobs:
         run: |
           # Your ML workflow goes here
           pip install -r requirements.txt
-          python ./Unit_Test/Final_project_updated.py
+          python ./Unit_Test/Final_Model.py
