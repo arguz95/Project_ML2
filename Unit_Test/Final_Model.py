@@ -100,15 +100,15 @@ df.info()
 # Some more information about the dataset
 
 
-display(df.shape)
-display(df.isnull().sum())
-display(df.describe())
+#display(df.shape)
+#display(df.isnull().sum())
+#display(df.describe())
 
 # +
 # Cheking for unique values
 
-display(df['Liability-Assets Flag'].nunique())
-display(df['Net Income Flag'].nunique())
+#display(df['Liability-Assets Flag'].nunique())
+#display(df['Net Income Flag'].nunique())
 
 # +
 # Dropping these 2 columnds
@@ -247,8 +247,8 @@ X.columns = x_col
 display(X.head())
 '''
 
-display(X_train.shape)
-display(y_train.shape)
+#display(X_train.shape)
+#display(y_train.shape)
 
 count = 0
 for i in y_train:
@@ -360,7 +360,7 @@ simplefilter(action='ignore', category=FutureWarning)
 
 from sklearn.exceptions import ConvergenceWarning
 simplefilter("ignore", category=ConvergenceWarning)
-
+'''
 models = get_model()
 names,results,result_df= bl_performance(X_train_prepared, y_train,models)
 
@@ -381,7 +381,7 @@ fig.update_layout(
 )
 fig.show()
 # -
-
+'''
 # ## Feature Selection, resampling and data transformation
 
 # +
@@ -436,8 +436,8 @@ over_sample=SMOTE()
 X_train_prepared, y_train=over_sample.fit_resample(X_train_prepared,y_train)
 # -
 
-display(X_train_prepared.shape)
-display(y_train.shape)
+#display(X_train_prepared.shape)
+#display(y_train.shape)
 
 plt.figure(figsize=(5,5))
 splot = sns.countplot(data = y_train, x = 'Bankrupt?', palette = 'Blues')
@@ -631,7 +631,7 @@ simplefilter(action='ignore', category=FutureWarning)
 
 from sklearn.exceptions import ConvergenceWarning
 simplefilter("ignore", category=ConvergenceWarning)
-
+'''
 models = get_model()
 names,results,result_df= bl_performance(X_train_prepared, y_train,models)
 
@@ -652,7 +652,7 @@ fig.update_layout(
 )
 fig.show()
 # -
-
+'''
 # ## Dimensionality Reduction
 # ### PCA
 
@@ -669,7 +669,7 @@ pca_viz.poof()
 from sklearn.decomposition import PCA
 pca = PCA(n_components=15)
 X_train_prepared_PCA = pca.fit_transform(X_train_prepared)
-
+'''
 # +
 models = get_model()
 names,results,result_df= bl_performance(X_train_prepared_PCA, y_train,models)
@@ -702,7 +702,7 @@ fig.update_layout(
 )
 fig.show()
 # -
-
+'''
 # ### t-SNE
 
 from sklearn.manifold import TSNE
@@ -725,7 +725,7 @@ X_tsne = ts.fit_transform(X_train_prepared)
 # +
 from warnings import simplefilter
 simplefilter(action='ignore', category=FutureWarning)
-
+'''
 from sklearn.exceptions import ConvergenceWarning
 simplefilter("ignore", category=ConvergenceWarning)
 
@@ -748,7 +748,7 @@ fig.update_layout(
 )
 fig.show()
 # -
-
+'''
 # ### PHATE
 
 # !pip install phate
@@ -763,7 +763,7 @@ phate.plot.scatter2d(p, c=y_train['Bankrupt?'], ax=ax, alpha=0.5)
 # +
 from warnings import simplefilter
 simplefilter(action='ignore', category=FutureWarning)
-
+'''
 from sklearn.exceptions import ConvergenceWarning
 simplefilter("ignore", category=ConvergenceWarning)
 
@@ -786,7 +786,7 @@ fig.update_layout(
 )
 fig.show()
 # -
-
+'''
 # ## MLflow
 
 # !pip install mlflow
