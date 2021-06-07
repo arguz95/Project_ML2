@@ -1,0 +1,52 @@
+artifact_path: model
+flavors:
+  lightgbm:
+    data: model.lgb
+    lgb_version: 3.1.1
+  python_function:
+    data: model.lgb
+    env: conda.yaml
+    loader_module: mlflow.lightgbm
+    python_version: 3.7.6
+run_id: 1331293d205247b9ae261d99b408054c
+signature:
+  inputs: '[{"name": "ROA(C) before interest and depreciation before interest", "type":
+    "double"}, {"name": "Net Worth Turnover Rate (times)", "type": "double"}, {"name":
+    "Per Share Net profit before tax bin_1", "type": "double"}, {"name": "Operating
+    profit per person", "type": "double"}, {"name": "Working Capital to Total Assets",
+    "type": "double"}, {"name": "Quick Assets/Total Assets", "type": "double"}, {"name":
+    "Current Assets/Total Assets", "type": "double"}, {"name": "Cash/Total Assets",
+    "type": "double"}, {"name": "Current Liability to Assets", "type": "double"},
+    {"name": "Inventory/Working Capital", "type": "double"}, {"name": "Current Liabilities/Liability",
+    "type": "double"}, {"name": "Working Capital/Equity", "type": "double"}, {"name":
+    "Current Liabilities/Equity", "type": "double"}, {"name": "Inventory Turnover
+    Rate (times)", "type": "double"}, {"name": "Total income/Total expense", "type":
+    "double"}, {"name": "Cash Turnover Rate", "type": "double"}, {"name": "Fixed Assets
+    to Assets", "type": "double"}, {"name": "Equity to Long-term Liability", "type":
+    "double"}, {"name": "Cash Flow to Total Assets", "type": "double"}, {"name": "Cash
+    Flow to Liability", "type": "double"}, {"name": "Current Liability to Current
+    Assets", "type": "double"}, {"name": "No-credit Interval", "type": "double"},
+    {"name": "Degree of Financial Leverage (DFL)", "type": "double"}, {"name": "Interest
+    Coverage Ratio (Interest expense to EBIT)", "type": "double"}, {"name": "Equity
+    to Liability", "type": "double"}, {"name": "Retained Earnings to Total Assets
+    bin_1", "type": "double"}, {"name": "Retained Earnings to Total Assets bin_2",
+    "type": "double"}, {"name": "Total expense/Assets", "type": "double"}, {"name":
+    "Total Asset Turnover", "type": "double"}, {"name": "Per Share Net profit before
+    tax bin_2", "type": "double"}, {"name": "After-tax Net Profit Growth Rate", "type":
+    "double"}, {"name": "Operating Profit Growth Rate", "type": "double"}, {"name":
+    "Inventory and accounts receivable/Net value", "type": "double"}, {"name": "Cash
+    flow rate", "type": "double"}, {"name": "Continuous Net Profit Growth Rate", "type":
+    "double"}, {"name": "Total Asset Growth Rate", "type": "double"}, {"name": "Research
+    and development expense rate", "type": "double"}, {"name": "Cash Flow Per Share",
+    "type": "double"}, {"name": "Cash Reinvestment %", "type": "double"}, {"name":
+    "Non-industry income and expenditure/revenue", "type": "double"}, {"name": "Net
+    Value Per Share (B)", "type": "double"}, {"name": "Tax rate (A)", "type": "double"},
+    {"name": "Operating Profit Rate", "type": "double"}, {"name": "Debt ratio %",
+    "type": "double"}, {"name": "Long-term fund suitability ratio (A)", "type": "double"},
+    {"name": "Borrowing dependency", "type": "double"}, {"name": "Contingent liabilities/Net
+    worth", "type": "double"}, {"name": "Operating Gross Margin", "type": "double"},
+    {"name": "Interest Expense Ratio", "type": "double"}, {"name": "Realized Sales
+    Gross Profit Growth Rate", "type": "double"}, {"name": "Quick Asset Turnover Rate",
+    "type": "double"}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1]}}]'
+utc_time_created: '2021-04-10 19:54:07.285097'
